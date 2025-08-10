@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  <title>website-wahtml</title>
+  <link rel="stylesheet" href="./style.css">
+
+</head>
+<body>
+<!-- partial:index.partial.html -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi Negocio - Plantilla PDF</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Contenedor principal del PDF -->
+    <div class="pdf-container">
+        <div class="pdf-wrapper">
+            <!-- Aquí cambias la URL del PDF -->
+            <embed 
+                src="tu-archivo.pdf" 
+                type="application/pdf" 
+                class="pdf-embed"
+                title="Información del negocio">
+            
+            <!-- Mensaje alternativo para dispositivos que no soporten embeds -->
+            <div class="pdf-fallback">
+                <div class="fallback-content">
+                    <i class="fas fa-file-pdf"></i>
+                    <h3>Ver PDF</h3>
+                    <p>Tu dispositivo no puede mostrar el PDF directamente.</p>
+                    <a href="tu-archivo.pdf" target="_blank" class="pdf-download-btn">
+                        <i class="fas fa-download"></i>
+                        Descargar PDF
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Botón flotante de WhatsApp -->
+    <div class="whatsapp-float" id="whatsappBtn">
+        <div class="whatsapp-icon">
+            <i class="fab fa-whatsapp"></i>
+        </div>
+        <div class="whatsapp-tooltip">
+            ¡Escríbenos!
+        </div>
+    </div>
+
+    <!-- Loading overlay -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading-spinner">
+            <i class="fas fa-spinner fa-spin"></i>
+            <p>Cargando PDF...</p>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
+<!-- partial -->
+  <script  src="./script.js"></script>
+
+</body>
+</html>

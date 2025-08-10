@@ -1,0 +1,335 @@
+/* ========================================
+   VARIABLES DE PERSONALIZACIÓN
+   Cambia estos valores para personalizar tu plantilla
+======================================== */
+:root {
+    /* COLORES PRINCIPALES */
+    --primary-color: #25D366;        /* Color principal (WhatsApp verde por defecto) */
+    --secondary-color: #128C7E;      /* Color secundario */
+    --accent-color: #34B7F1;        /* Color de acento */
+    --background-color: #f5f5f5;    /* Fondo de la página */
+    --text-color: #333333;          /* Color de texto */
+    --white: #ffffff;               /* Blanco */
+    
+    /* COLORES DEL BOTÓN WHATSAPP */
+    --whatsapp-bg: var(--primary-color);
+    --whatsapp-hover: var(--secondary-color);
+    --whatsapp-shadow: rgba(37, 211, 102, 0.3);
+    
+    /* TAMAÑOS Y ESPACIOS */
+    --border-radius: 12px;
+    --whatsapp-size: 60px;
+    --container-padding: 20px;
+    --container-max-width: 1200px;
+    
+    /* SOMBRAS */
+    --box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    --whatsapp-shadow-hover: 0 8px 25px rgba(37, 211, 102, 0.4);
+}
+
+/* ========================================
+   ESTILOS GENERALES
+======================================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: var(--background-color);
+    color: var(--text-color);
+    line-height: 1.6;
+    overflow-x: hidden;
+}
+
+/* ========================================
+   CONTENEDOR DEL PDF
+======================================== */
+.pdf-container {
+    width: 100%;
+    min-height: 100vh;
+    padding: var(--container-padding);
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.pdf-wrapper {
+    width: 100%;
+    max-width: var(--container-max-width);
+    height: 100vh;
+    position: relative;
+    background: var(--white);
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    overflow: hidden;
+}
+
+.pdf-embed {
+    width: 100%;
+    height: 100%;
+    border: none;
+    display: block;
+}
+
+/* ========================================
+   FALLBACK PARA DISPOSITIVOS SIN SOPORTE PDF
+======================================== */
+.pdf-fallback {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    display: none;
+    justify-content: center;
+    align-items: center;
+    color: var(--white);
+    text-align: center;
+}
+
+.fallback-content i {
+    font-size: 4rem;
+    margin-bottom: 1rem;
+    opacity: 0.9;
+}
+
+.fallback-content h3 {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+}
+
+.fallback-content p {
+    font-size: 1rem;
+    margin-bottom: 2rem;
+    opacity: 0.8;
+}
+
+.pdf-download-btn {
+    background: var(--white);
+    color: var(--primary-color);
+    padding: 12px 24px;
+    border-radius: var(--border-radius);
+    text-decoration: none;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.pdf-download-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+}
+
+/* ========================================
+   BOTÓN FLOTANTE DE WHATSAPP
+======================================== */
+.whatsapp-float {
+    position: fixed;
+    width: var(--whatsapp-size);
+    height: var(--whatsapp-size);
+    bottom: 30px;
+    right: 30px;
+    background-color: var(--whatsapp-bg);
+    color: var(--white);
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.8rem;
+    cursor: pointer;
+    box-shadow: 0 4px 20px var(--whatsapp-shadow);
+    transition: all 0.3s ease;
+    z-index: 1000;
+    animation: pulse 2s infinite;
+}
+
+.whatsapp-float:hover {
+    background-color: var(--whatsapp-hover);
+    transform: scale(1.1);
+    box-shadow: var(--whatsapp-shadow-hover);
+    animation: none;
+}
+
+.whatsapp-icon {
+    transition: transform 0.3s ease;
+}
+
+.whatsapp-float:hover .whatsapp-icon {
+    transform: rotate(15deg);
+}
+
+/* Tooltip del WhatsApp */
+.whatsapp-tooltip {
+    position: absolute;
+    right: calc(100% + 15px);
+    top: 50%;
+    transform: translateY(-50%);
+    background: var(--text-color);
+    color: var(--white);
+    padding: 8px 12px;
+    border-radius: 6px;
+    font-size: 0.8rem;
+    white-space: nowrap;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    font-weight: 500;
+}
+
+.whatsapp-tooltip::after {
+    content: '';
+    position: absolute;
+    left: 100%;
+    top: 50%;
+    transform: translateY(-50%);
+    border: 5px solid transparent;
+    border-left-color: var(--text-color);
+}
+
+.whatsapp-float:hover .whatsapp-tooltip {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(-50%) translateX(-5px);
+}
+
+/* Animación de pulso */
+@keyframes pulse {
+    0% {
+        box-shadow: 0 4px 20px var(--whatsapp-shadow);
+    }
+    50% {
+        box-shadow: 0 4px 20px var(--whatsapp-shadow), 0 0 0 10px rgba(37, 211, 102, 0.1);
+    }
+    100% {
+        box-shadow: 0 4px 20px var(--whatsapp-shadow);
+    }
+}
+
+/* ========================================
+   LOADING OVERLAY
+======================================== */
+.loading-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.95);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    opacity: 1;
+    visibility: visible;
+    transition: all 0.5s ease;
+}
+
+.loading-overlay.hidden {
+    opacity: 0;
+    visibility: hidden;
+}
+
+.loading-spinner {
+    text-align: center;
+    color: var(--primary-color);
+}
+
+.loading-spinner i {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+}
+
+.loading-spinner p {
+    font-size: 1.1rem;
+    font-weight: 500;
+}
+
+/* ========================================
+   RESPONSIVE DESIGN
+======================================== */
+
+/* Tablets */
+@media (max-width: 768px) {
+    :root {
+        --container-padding: 15px;
+        --whatsapp-size: 55px;
+    }
+    
+    .pdf-wrapper {
+        height: calc(100vh - 30px);
+        border-radius: 8px;
+    }
+    
+    .whatsapp-float {
+        bottom: 25px;
+        right: 25px;
+        font-size: 1.6rem;
+    }
+    
+    .whatsapp-tooltip {
+        display: none; /* Ocultar tooltip en tablets */
+    }
+}
+
+/* Móviles */
+@media (max-width: 480px) {
+    :root {
+        --container-padding: 10px;
+        --whatsapp-size: 50px;
+    }
+    
+    .pdf-container {
+        padding: 10px;
+    }
+    
+    .pdf-wrapper {
+        height: calc(100vh - 20px);
+        border-radius: 6px;
+    }
+    
+    .whatsapp-float {
+        bottom: 20px;
+        right: 20px;
+        font-size: 1.4rem;
+    }
+    
+    .fallback-content i {
+        font-size: 3rem;
+    }
+    
+    .fallback-content h3 {
+        font-size: 1.2rem;
+    }
+    
+    .fallback-content p {
+        font-size: 0.9rem;
+        padding: 0 20px;
+    }
+}
+
+/* Móviles muy pequeños */
+@media (max-width: 320px) {
+    .pdf-container {
+        padding: 5px;
+    }
+    
+    .pdf-wrapper {
+        height: calc(100vh - 10px);
+    }
+    
+    .whatsapp-float {
+        width: 45px;
+        height: 45px;
+        font-size: 1.2rem;
+        bottom: 15px;
+        right: 15px;
+    }
+}
